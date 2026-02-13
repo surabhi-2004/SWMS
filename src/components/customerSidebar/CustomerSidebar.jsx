@@ -7,7 +7,7 @@ import {
   ListItemIcon,
   Divider,
 } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 
 // Icons
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
