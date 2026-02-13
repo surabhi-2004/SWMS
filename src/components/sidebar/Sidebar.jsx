@@ -14,7 +14,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+
 
 const Sidebar = () => {
   const location = useLocation();
@@ -97,36 +97,7 @@ const Sidebar = () => {
       </List>
 
       {/* ===== PUSH LOGOUT TO BOTTOM ===== */}
-      <Box sx={{ flexGrow: 1 }} />
-
-      <Divider sx={{ bgcolor: "rgba(255,255,255,0.2)", mb: 1 }} />
-
-      {/* ===== LOGOUT ===== */}
-      <List>
-        <ListItem
-          onClick={handleLogout}
-          sx={{
-            borderRadius: 1.5,
-            cursor: "pointer",
-            color: "#fff",
-            "&:hover": {
-              backgroundColor: "#132f55",
-            },
-          }}
-        >
-          <ListItemIcon sx={{ color: "#fff", minWidth: 36 }}>
-            <LogoutOutlinedIcon />
-          </ListItemIcon>
-
-          <ListItemText
-            primary="Logout"
-            primaryTypographyProps={{
-              fontSize: "14.5px",
-              fontWeight: 500,
-            }}
-          />
-        </ListItem>
-      </List>
+      
     </Box>
   );
 };

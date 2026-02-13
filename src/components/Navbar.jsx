@@ -1,9 +1,18 @@
 import React from "react";
-import { AppBar, Toolbar, Box } from "@mui/material";
+import { AppBar, Toolbar, Box, IconButton, Tooltip } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useNavigate } from "react-router-dom";
+
 import daewooLogo from "../assets/images/logo.png";
 import vciLogo from "../assets/images/logo2.png";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/");
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -19,7 +28,7 @@ const Navbar = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          px: 6,          // 👈 left-right spacing increased
+          px: 6,
           minHeight: "75px !important",
         }}
       >
@@ -35,16 +44,41 @@ const Navbar = () => {
           />
         </Box>
 
-        {/* RIGHT LOGO */}
-        <Box sx={{ display: "flex", alignItems: "center"}}>
+        {/* RIGHT SECTION */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          {/* VCI LOGO */}
           <img
             src={vciLogo}
             alt="VCI Logo"
             style={{
-              height: "120px",     // ✅ same height as left logo
-              //objectFit: "contain",
+              height: "100px",
+              objectFit: "contain",
             }}
           />
+
+          {/* LOGOUT ICON */}
+          <Tooltip title="Logout" arrow>
+            <IconButton
+              onClick={handleLogout}
+              sx={{
+                backgroundColor: "#dc2626",
+                color: "white",
+                width: 38,
+                height: 38,
+                "&:hover": {
+                  backgroundColor: "#b91c1c",
+                },
+              }}
+            >
+              <LogoutIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Toolbar>
     </AppBar>

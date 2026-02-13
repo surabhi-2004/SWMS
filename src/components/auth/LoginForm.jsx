@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+
 import {
   Box,
   Button,
   TextField,
   Typography,
   Link,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
 } from "@mui/material";
 
 const LoginForm = () => {
@@ -13,41 +21,25 @@ const LoginForm = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("ADMIN"); // 🔥 default role
+
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleLogin = () => {
-    const dummyUsers = {
-      "admin@test.com": {
-        role: "ADMIN",
-        isProfileComplete: false,
-      },
-      "customer@test.com": {
-        role: "CUSTOMER",
-        isProfileComplete: false,
-      },
-      "admin2@test.com": {
-        role: "ADMIN",
-        isProfileComplete: true,
-      },
-    };
-
-    const user = dummyUsers[email];
-
-    if (!user) {
-      alert("Invalid credentials");
+    if (!email || !password) {
+      alert("Please enter email and password");
       return;
     }
 
-    if (!user.isProfileComplete) {
-      // 🔑 store role temporarily
-      localStorage.setItem("role", user.role);
-      navigate("/register");
-    } else {
-      if (user.role === "ADMIN") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/customer/dashboard");
-      }
-    }
+    // 🔴 Dummy logic (backend later)
+    navigate("/welcome", {
+      state: {
+        name: email.split("@")[0], // temporary dummy name
+        role: role,
+      },
+    });
+
   };
 
   return (
@@ -70,6 +62,26 @@ const LoginForm = () => {
         Login
       </Typography>
 
+      {/* 🔥 ROLE RADIO BUTTONS */}
+      <FormControl sx={{ mb: 2 }}>
+        <RadioGroup
+          row
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
+          <FormControlLabel
+            value="ADMIN"
+            control={<Radio />}
+            label="Admin"
+          />
+          <FormControlLabel
+            value="CUSTOMER"
+            control={<Radio />}
+            label="Customer"
+          />
+        </RadioGroup>
+      </FormControl>
+
       <TextField
         fullWidth
         label="Email / Username"
@@ -80,14 +92,43 @@ const LoginForm = () => {
 
       <TextField
         fullWidth
-        type="password"
+        type={showPassword ? "text" : "password"}
         label="Password"
         margin="normal"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        InputProps={{
+          endAdornment: (
+            <IconButton
+              onClick={() => setShowPassword(!showPassword)}
+              edge="end"
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          ),
+        }}
       />
 
-      <Box textAlign="right" mt={1}>
+      {/* SHOW PASSWORD + FORGOT PASSWORD ROW */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mt: 1,
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: "14px",
+            cursor: "pointer",
+            color: "#475569",
+          }}
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? "Hide Password" : "Show Password"}
+        </Typography>
+
         <Link
           component="button"
           underline="hover"
@@ -112,6 +153,24 @@ const LoginForm = () => {
       >
         Login
       </Button>
+
+      <Box textAlign="center" mt={2}>
+      <Typography sx={{ fontSize: "14px", color: "#475569" }}>
+        Don't have an account?{" "}
+        <Box
+          component="span"
+          sx={{
+            color: "#0b5ed7",
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
+          onClick={() => navigate("/register")}
+        >
+          Register
+        </Box>
+      </Typography>
+    </Box>
+
     </Box>
   );
 };

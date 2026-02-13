@@ -1,11 +1,30 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, Button, Dialog, DialogTitle, DialogContent, List, ListItem, ListItemText } from "@mui/material";
 import Sidebar from "../../components/sidebar/Sidebar";
 import AdminStatCard from "../../components/adminDashboard/AdminStatCard";
 import UsageBarChart from "../../components/adminDashboard/charts/UsageBarChart";
 import HealthPieChart from "../../components/adminDashboard/charts/HealthPieChart";
 
 const AdminDashboard = () => {
+
+  // ✅ STATE ABOVE RETURN
+  const [openList, setOpenList] = useState(null);
+
+  // ✅ DUMMY DATA
+  const activeMachines = [
+    "WM-1001",
+    "WM-1002",
+    "WM-1003",
+    "WM-1004",
+    "WM-1005",
+  ];
+
+  const offlineMachines = [
+    "WM-2001",
+    "WM-2002",
+    "WM-2003",
+  ];
+
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <Sidebar />
@@ -22,7 +41,7 @@ const AdminDashboard = () => {
           Admin Dashboard
         </Typography>
 
-        {/* ===== KPI CARDS (PURE FLEX) ===== */}
+        {/* ===== KPI CARDS ===== */}
         <Box
           sx={{
             display: "flex",
@@ -32,8 +51,45 @@ const AdminDashboard = () => {
           }}
         >
           <AdminStatCard title="TOTAL MACHINES" value="2000">
-            <Typography>Active: 1800</Typography>
-            <Typography>Offline: 100</Typography>
+            <Box
+  sx={{
+    display: "flex",
+    gap: 2,
+    mt: 2,
+    alignItems: "center",
+  }}
+>
+  <Button
+    variant="contained"
+    size="small"
+    sx={{
+      backgroundColor: "#16a34a",
+      textTransform: "none",
+      fontWeight: 600,
+      px: 2,
+      "&:hover": { backgroundColor: "#15803d" },
+    }}
+    onClick={() => setOpenList("active")}
+  >
+    Active: 1800
+  </Button>
+
+  <Button
+    variant="contained"
+    size="small"
+    sx={{
+      backgroundColor: "#dc2626",
+      textTransform: "none",
+      fontWeight: 600,
+      px: 2,
+      "&:hover": { backgroundColor: "#b91c1c" },
+    }}
+    onClick={() => setOpenList("offline")}
+  >
+    Offline: 100
+  </Button>
+</Box>
+
           </AdminStatCard>
 
           <AdminStatCard title="SYSTEM HEALTH" value="1450">
@@ -91,6 +147,34 @@ const AdminDashboard = () => {
             <HealthPieChart />
           </Box>
         </Box>
+
+        {/* ===== MACHINE LIST POPUP ===== */}
+        <Dialog
+          open={Boolean(openList)}
+          onClose={() => setOpenList(null)}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogTitle>
+            {openList === "active"
+              ? "Active Machines List"
+              : "Offline Machines List"}
+          </DialogTitle>
+
+          <DialogContent dividers>
+            <List>
+              {(openList === "active"
+                ? activeMachines
+                : offlineMachines
+              ).map((machine, index) => (
+                <ListItem key={index}>
+                  <ListItemText primary={machine} />
+                </ListItem>
+              ))}
+            </List>
+          </DialogContent>
+        </Dialog>
+
       </Box>
     </Box>
   );

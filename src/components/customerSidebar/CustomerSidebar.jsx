@@ -16,7 +16,6 @@ import MonitorHeartOutlinedIcon from "@mui/icons-material/MonitorHeartOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 
 const CustomerSidebar = () => {
   const location = useLocation();
@@ -110,7 +109,7 @@ const CustomerSidebar = () => {
           sx={{
             borderRadius: 1,
             color: "white",
-            mb: 0.5,
+            mb: 10,
             backgroundColor: isActive("/customer/helpdesk")
               ? "#132f55"
               : "transparent",
@@ -126,25 +125,7 @@ const CustomerSidebar = () => {
         </ListItem>
       </List>
 
-      {/* 🚪 LOGOUT */}
-      <List>
-        <ListItem
-          onClick={handleLogout}
-          sx={{
-            borderRadius: 1,
-            color: "white",
-            cursor: "pointer",
-            "&:hover": {
-              backgroundColor: "#b91c1c",
-            },
-          }}
-        >
-          <ListItemIcon sx={{ color: "white", minWidth: 36 }}>
-            <LogoutOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
-        </ListItem>
-      </List>
+      
     </Box>
   );
 };

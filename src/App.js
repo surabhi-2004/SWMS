@@ -12,6 +12,7 @@ import MachineHealth from "./pages/customer/MachineHealth";
 import Helpdesk from "./pages/customer/Helpdesk";
 import CustomerSessions from "./pages/customer/CustomerSessions";
 import CustomerAlerts from "./pages/customer/CustomerAlerts";
+import Welcome from "./pages/Welcome";
 
 
 
@@ -32,6 +33,8 @@ function App() {
         <Route path="/customer/helpdesk" element={<Helpdesk />} />
         <Route path="/customer/sessions" element={<CustomerSessions />} />
         <Route path="/customer/alerts" element={<CustomerAlerts />} />
+        <Route path="/welcome" element={<Welcome />} />
+
 
       </Routes>
     </BrowserRouter>
