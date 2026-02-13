@@ -19,8 +19,6 @@ import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 
 const CustomerSidebar = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-
   const topMenu = [
     {
       label: "Dashboard",
