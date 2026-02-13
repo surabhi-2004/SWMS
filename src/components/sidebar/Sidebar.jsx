@@ -5,9 +5,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider,
 } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // Icons
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
@@ -18,7 +17,6 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const Sidebar = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const menu = [
     {
@@ -43,10 +41,6 @@ const Sidebar = () => {
     },
   ];
 
-  const handleLogout = () => {
-    // future: clear token / session
-    navigate("/");
-  };
 
   return (
     <Box

@@ -51,11 +51,7 @@ const CustomerSidebar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  const handleLogout = () => {
-    // later: clear token / session
-    navigate("/");
-  };
-
+ 
   return (
     <Box
       sx={{
