@@ -5,9 +5,10 @@ import CustomerSidebar from "../../components/customerSidebar/CustomerSidebar";
 import OpacityIcon from "@mui/icons-material/Opacity";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
+import WavesIcon from "@mui/icons-material/Waves";
 
 const CustomerDashboard = () => {
-  const filterStatus = "GOOD"; // GOOD | BAD | CRITICAL
+  const filterStatus = "GOOD";
 
   const getStatusColor = () => {
     switch (filterStatus) {
@@ -24,148 +25,153 @@ const CustomerDashboard = () => {
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      <CustomerSidebar />
 
+      {/* 🔵 SIDEBAR FIXED & WIDER */}
+      <Box
+        sx={{
+          width: 280,     // 🔥 was 260 → now 280
+          flexShrink: 0,
+        }}
+      >
+        <CustomerSidebar />
+      </Box>
+
+      {/* MAIN CONTENT */}
       <Box
         sx={{
           flexGrow: 1,
-          p: 4,
+          px: 5,
+          py: 4,
           backgroundColor: "#f1f5f9",
         }}
       >
-        {/* ================= STAT CARDS ================= */}
+
+        {/* ===== CARDS ROW ===== */}
         <Box
           sx={{
             display: "flex",
-            gap: 4,
+            gap: 3,
             flexWrap: "wrap",
-            mb: 5,
+            alignItems: "stretch",
           }}
         >
-          {/* Water Consumed */}
+
+          {/* REUSABLE CARDS */}
+          {[
+            {
+              title: "Water Consumed",
+              value: "12,500 L",
+              icon: <WaterDropIcon sx={{ color: "#2563eb" }} />,
+            },
+            {
+              title: "Balance Water Remaining",
+              value: "7,500 L",
+              icon: <OpacityIcon sx={{ color: "#0ea5e9" }} />,
+            },
+            {
+              title: "Balance Amount Remaining",
+              value: "₹1,250",
+              icon: (
+                <AccountBalanceWalletOutlinedIcon
+                  sx={{ color: "#16a34a" }}
+                />
+              ),
+            },
+          ].map((card, index) => (
+            <Paper
+              key={index}
+              sx={{
+                width: 270,
+                height: 190,   // ✅ Increased height
+                borderRadius: 4,
+                overflow: "hidden",
+                boxShadow: "0 15px 35px rgba(0,0,0,0.15)",
+              }}
+            >
+              {/* HEADER BLUE PART */}
+              <Box
+                sx={{
+                  backgroundColor: "#cfe8f7",
+                  p: 2,
+                  borderBottom: "1px solid #d1d5db",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
+                {card.icon}
+                <Typography
+                  fontWeight={600}
+                  fontSize="14px"
+                  lineHeight={1.3}
+                >
+                  {card.title}
+                </Typography>
+              </Box>
+
+              <Box sx={{ p: 3 }}>
+                <Typography fontSize="26px" fontWeight={600}>
+                  {card.value}
+                </Typography>
+              </Box>
+            </Paper>
+          ))}
+
+          {/* WATER QUALITY CARD */}
           <Paper
             sx={{
-              width: 320,
-              height: 160,
-              p: 3,
+              width: 270,
+              height: 190,  // ✅ Same height as others
               borderRadius: 4,
+              overflow: "hidden",
               boxShadow: "0 15px 35px rgba(0,0,0,0.15)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
             }}
           >
-            <Box display="flex" alignItems="center" gap={1}>
-              <WaterDropIcon sx={{ color: "#2563eb" }} />
-              <Typography fontWeight={600}>
-                Water Consumed
+            <Box
+              sx={{
+                backgroundColor: "#cfe8f7",
+                p: 2,
+                borderBottom: "1px solid #d1d5db",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              <WavesIcon sx={{ color: getStatusColor() }} />
+              <Typography fontWeight={600} fontSize="14px">
+                Water Quality Status
               </Typography>
             </Box>
 
-            <Typography
-              fontSize="28px"
-              fontWeight={600}
-              sx={{ mt: 3 }}
+            <Box
+              sx={{
+                p: 3,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 2,
+              }}
             >
-              12,500 L
-            </Typography>
-          </Paper>
+              <WaterDropIcon
+                sx={{
+                  fontSize: 55,
+                  color: getStatusColor(),
+                }}
+              />
 
-          {/* Balance Water */}
-          <Paper
-            sx={{
-              width: 320,
-              height: 160,
-              p: 3,
-              borderRadius: 4,
-              boxShadow: "0 15px 35px rgba(0,0,0,0.15)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1}>
-              <OpacityIcon sx={{ color: "#0ea5e9" }} />
-              <Typography fontWeight={600}>
-                Balance Water Remaining
+              <Typography
+                fontWeight={800}
+                sx={{
+                  color: getStatusColor(),
+                  fontSize: "18px",
+                }}
+              >
+                {filterStatus}
               </Typography>
             </Box>
-
-            <Typography
-              fontSize="28px"
-              fontWeight={600}
-              sx={{ mt: 3 }}
-            >
-              7,500 L
-            </Typography>
           </Paper>
 
-          {/* Balance Amount */}
-          <Paper
-            sx={{
-              width: 320,
-              height: 160,
-              p: 3,
-              borderRadius: 4,
-              boxShadow: "0 15px 35px rgba(0,0,0,0.15)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1}>
-              <AccountBalanceWalletOutlinedIcon sx={{ color: "#16a34a" }} />
-              <Typography fontWeight={600}>
-                Balance Amount Remaining
-              </Typography>
-            </Box>
-
-            <Typography
-              fontSize="28px"
-              fontWeight={600}
-              sx={{ mt: 3 }}
-            >
-              ₹1,250
-            </Typography>
-          </Paper>
         </Box>
-
-        {/* ================= WATER QUALITY CARD ================= */}
-        <Paper
-          sx={{
-            width: 300,
-            maxHeight: 400,
-            p: 5,
-            borderRadius: 4,
-            textAlign: "center",
-            boxShadow: "0 20px 45px rgba(0,0,0,0.18)",
-          }}
-        >
-          <Typography fontWeight={700} mb={4} fontSize="18px">
-            Water Quality Status
-          </Typography>
-
-          {/* FULL FILLED DROPLET */}
-          <WaterDropIcon
-            sx={{
-              fontSize: 150,
-              color: getStatusColor(),
-              filter: "drop-shadow(0px 15px 30px rgba(0,0,0,0.25))",
-            }}
-          />
-
-          <Typography
-            mt={3}
-            fontWeight={800}
-            sx={{
-              color: getStatusColor(),
-              fontSize: "20px",
-              letterSpacing: 1,
-            }}
-          >
-            {filterStatus}
-          </Typography>
-        </Paper>
       </Box>
     </Box>
   );
