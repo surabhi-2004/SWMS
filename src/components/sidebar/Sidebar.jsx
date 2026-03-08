@@ -13,7 +13,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined"; // Recharge icon
 
 const Sidebar = () => {
   const location = useLocation();
@@ -35,12 +35,16 @@ const Sidebar = () => {
       icon: <AssessmentOutlinedIcon />,
     },
     {
+      label: "Recharge",
+      path: "/admin/recharge",
+      icon: <PaymentsOutlinedIcon />,
+    },
+    {
       label: "Settings",
       path: "/admin/settings",
       icon: <SettingsOutlinedIcon />,
     },
   ];
-
 
   return (
     <Box
@@ -54,7 +58,7 @@ const Sidebar = () => {
         flexDirection: "column",
       }}
     >
-      {/* ===== TOP MENU ===== */}
+      {/* ===== MENU ===== */}
       <List>
         {menu.map((item) => {
           const active = location.pathname === item.path;
@@ -89,9 +93,6 @@ const Sidebar = () => {
           );
         })}
       </List>
-
-      {/* ===== PUSH LOGOUT TO BOTTOM ===== */}
-      
     </Box>
   );
 };

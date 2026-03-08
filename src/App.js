@@ -13,7 +13,7 @@ import Helpdesk from "./pages/customer/Helpdesk";
 import CustomerSessions from "./pages/customer/CustomerSessions";
 import CustomerAlerts from "./pages/customer/CustomerAlerts";
 import Welcome from "./pages/Welcome";
-
+import Recharge from "./pages/admin/Recharge";
 
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
         <Route path="/customer/sessions" element={<CustomerSessions />} />
         <Route path="/customer/alerts" element={<CustomerAlerts />} />
         <Route path="/welcome" element={<Welcome />} />
-
+        <Route path="/admin/recharge" element={<Recharge />} />
 
       </Routes>
     </BrowserRouter>
