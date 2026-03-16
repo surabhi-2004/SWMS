@@ -13,7 +13,8 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined"; // Recharge icon
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
+import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -35,6 +36,11 @@ const Sidebar = () => {
       icon: <AssessmentOutlinedIcon />,
     },
     {
+      label: "Revenue",
+      path: "/admin/revenue",
+      icon: <CurrencyRupeeOutlinedIcon />
+    },
+    {
       label: "Recharge",
       path: "/admin/recharge",
       icon: <PaymentsOutlinedIcon />,
@@ -43,7 +49,7 @@ const Sidebar = () => {
       label: "Settings",
       path: "/admin/settings",
       icon: <SettingsOutlinedIcon />,
-    },
+    }
   ];
 
   return (
@@ -58,7 +64,6 @@ const Sidebar = () => {
         flexDirection: "column",
       }}
     >
-      {/* ===== MENU ===== */}
       <List>
         {menu.map((item) => {
           const active = location.pathname === item.path;

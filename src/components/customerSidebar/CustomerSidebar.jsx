@@ -16,6 +16,7 @@ import MonitorHeartOutlinedIcon from "@mui/icons-material/MonitorHeartOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
+import PaymentIcon from "@mui/icons-material/Payment";
 
 const CustomerSidebar = () => {
   const location = useLocation();
@@ -34,6 +35,11 @@ const CustomerSidebar = () => {
       label: "Machine Health",
       path: "/customer/machine-health",
       icon: <MonitorHeartOutlinedIcon />,
+    },
+    {
+      label: "Recharge",
+      path: "/customer/recharge",
+      icon: <PaymentIcon />,
     },
     {
       label: "Sessions",

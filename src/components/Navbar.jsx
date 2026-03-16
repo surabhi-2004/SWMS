@@ -1,17 +1,24 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Box, IconButton, Tooltip } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useNavigate } from "react-router-dom";
 
 import daewooLogo from "../assets/images/logo.png";
 import vciLogo from "../assets/images/logo2.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     navigate("/");
   };
+
+  // Hide logout button on login & register pages
+  const hideLogout =
+    location.pathname === "/" ||
+    location.pathname === "/login" ||
+    location.pathname === "/register";
 
   return (
     <AppBar
@@ -63,22 +70,24 @@ const Navbar = () => {
           />
 
           {/* LOGOUT ICON */}
-          <Tooltip title="Logout" arrow>
-            <IconButton
-              onClick={handleLogout}
-              sx={{
-                backgroundColor: "#dc2626",
-                color: "white",
-                width: 38,
-                height: 38,
-                "&:hover": {
-                  backgroundColor: "#b91c1c",
-                },
-              }}
-            >
-              <LogoutIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+          {!hideLogout && (
+            <Tooltip title="Logout" arrow>
+              <IconButton
+                onClick={handleLogout}
+                sx={{
+                  backgroundColor: "#dc2626",
+                  color: "white",
+                  width: 38,
+                  height: 38,
+                  "&:hover": {
+                    backgroundColor: "#b91c1c",
+                  },
+                }}
+              >
+                <LogoutIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

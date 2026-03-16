@@ -21,10 +21,8 @@ const LoginForm = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("ADMIN"); // 🔥 default role
-
+  const [role, setRole] = useState("ADMIN");
   const [showPassword, setShowPassword] = useState(false);
-
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -32,14 +30,13 @@ const LoginForm = () => {
       return;
     }
 
-    // 🔴 Dummy logic (backend later)
+    // Dummy login for development
     navigate("/welcome", {
       state: {
-        name: email.split("@")[0], // temporary dummy name
+        name: email.split("@")[0],
         role: role,
       },
     });
-
   };
 
   return (
@@ -62,26 +59,15 @@ const LoginForm = () => {
         Login
       </Typography>
 
-      {/* 🔥 ROLE RADIO BUTTONS */}
+      {/* Role Selection */}
       <FormControl sx={{ mb: 2 }}>
-        <RadioGroup
-          row
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        >
-          <FormControlLabel
-            value="ADMIN"
-            control={<Radio />}
-            label="Admin"
-          />
-          <FormControlLabel
-            value="CUSTOMER"
-            control={<Radio />}
-            label="Customer"
-          />
+        <RadioGroup row value={role} onChange={(e) => setRole(e.target.value)}>
+          <FormControlLabel value="ADMIN" control={<Radio />} label="Admin" />
+          <FormControlLabel value="CUSTOMER" control={<Radio />} label="Customer" />
         </RadioGroup>
       </FormControl>
 
+      {/* Username */}
       <TextField
         fullWidth
         label="Email / Username"
@@ -90,6 +76,7 @@ const LoginForm = () => {
         onChange={(e) => setEmail(e.target.value)}
       />
 
+      {/* Password */}
       <TextField
         fullWidth
         type={showPassword ? "text" : "password"}
@@ -109,7 +96,7 @@ const LoginForm = () => {
         }}
       />
 
-      {/* SHOW PASSWORD + FORGOT PASSWORD ROW */}
+      {/* Show Password + Forgot */}
       <Box
         sx={{
           display: "flex",
@@ -138,6 +125,7 @@ const LoginForm = () => {
         </Link>
       </Box>
 
+      {/* Login Button */}
       <Button
         fullWidth
         variant="contained"
@@ -154,23 +142,23 @@ const LoginForm = () => {
         Login
       </Button>
 
+      {/* Register */}
       <Box textAlign="center" mt={2}>
-      <Typography sx={{ fontSize: "14px", color: "#475569" }}>
-        Don't have an account?{" "}
-        <Box
-          component="span"
-          sx={{
-            color: "#0b5ed7",
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
-          onClick={() => navigate("/register")}
-        >
-          Register
-        </Box>
-      </Typography>
-    </Box>
-
+        <Typography sx={{ fontSize: "14px", color: "#475569" }}>
+          Don't have an account?{" "}
+          <Box
+            component="span"
+            sx={{
+              color: "#0b5ed7",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </Box>
+        </Typography>
+      </Box>
     </Box>
   );
 };

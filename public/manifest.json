@@ -1,0 +1,15 @@
+{
+  "short_name": "SWMS",
+  "name": "Smart Water Monitoring System",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "16x16 32x32 64x64",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1976d2",
+  "background_color": "#ffffff"
+}

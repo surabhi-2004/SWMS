@@ -14,7 +14,9 @@ import CustomerSessions from "./pages/customer/CustomerSessions";
 import CustomerAlerts from "./pages/customer/CustomerAlerts";
 import Welcome from "./pages/Welcome";
 import Recharge from "./pages/admin/Recharge";
-
+import CustomerRecharge from "./pages/customer/CustomerRecharge";
+import Settings from "./pages/admin/Settings";
+import Revenue from "./pages/admin/Revenue";
 
 function App() {
   return (
@@ -35,7 +37,9 @@ function App() {
         <Route path="/customer/alerts" element={<CustomerAlerts />} />
         <Route path="/welcome" element={<Welcome />} />
         <Route path="/admin/recharge" element={<Recharge />} />
-
+        <Route path="/customer/recharge" element={<CustomerRecharge />} />
+        <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/revenue" element={<Revenue />} />
       </Routes>
     </BrowserRouter>
   );

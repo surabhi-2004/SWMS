@@ -20,11 +20,22 @@ import {
   InputAdornment,
   Avatar,
   Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  //Grid
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import HomeIcon from "@mui/icons-material/Home";
 
 import Sidebar from "../../components/sidebar/Sidebar";
 
@@ -68,39 +79,36 @@ const companiesData = [
       { name: "Canara Bank", machines: 140, balance: "₹4,10,000" },
     ],
   },
-  {
-    name: "Tesla Automobiles",
-    profile: "Automobile Manufacturing",
-    status: "Inactive",
-    customers: [
-      { name: "Bank of Maharashtra", machines: 80, balance: "₹2,30,000" },
-    ],
-  },
-  {
-    name: "Wincare Softwares",
-    profile: "Enterprise Software",
-    status: "Active",
-    customers: [
-      { name: "ICICI Bank", machines: 70, balance: "₹2,10,000" },
-      { name: "HDFC Bank", machines: 50, balance: "₹1,60,000" },
-    ],
-  },
-  {
-    name: "Bharti Airtel Limited",
-    profile: "Telecommunications",
-    status: "Active",
-    customers: [
-      { name: "State Bank of India", machines: 180, balance: "₹5,40,000" },
-      { name: "Canara Bank", machines: 110, balance: "₹3,90,000" },
-    ],
-  },
 ];
 
 /* ================= COMPONENT ================= */
 
 const Companies = () => {
+
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
+
+  const [openDetails, setOpenDetails] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  const handleViewDetails = (customer) => {
+
+    const dummyDetails = {
+      name: customer.name,
+      address: "MG Road",
+      city: "Mumbai",
+      district: "Mumbai City",
+      state: "Maharashtra",
+      pin: "400001",
+      landmark: "Near Metro Station",
+      contact: "9876543210",
+      alternate: "9123456780",
+      email: "bank@example.com",
+    };
+
+    setSelectedCustomer(dummyDetails);
+    setOpenDetails(true);
+  };
 
   const filteredCompanies = companiesData.filter((company) => {
     const matchesSearch = company.name
@@ -115,17 +123,19 @@ const Companies = () => {
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      {/* SIDEBAR */}
+      
       <Sidebar />
 
-      {/* MAIN CONTENT */}
       <Box sx={{ flexGrow: 1, p: 4, backgroundColor: "#f1f5f9" }}>
+
         {/* HEADER */}
+
         <Typography variant="h5" fontWeight={700} mb={3}>
           Companies
         </Typography>
 
         {/* ACTION BAR */}
+
         <Paper
           sx={{
             p: 2,
@@ -136,7 +146,9 @@ const Companies = () => {
             gap: 2,
           }}
         >
+
           <Box sx={{ display: "flex", gap: 2 }}>
+
             <TextField
               size="small"
               placeholder="Search company..."
@@ -160,6 +172,7 @@ const Companies = () => {
               <MenuItem value="Active">Active</MenuItem>
               <MenuItem value="Inactive">Inactive</MenuItem>
             </Select>
+
           </Box>
 
           <Button
@@ -169,11 +182,15 @@ const Companies = () => {
           >
             Add Company
           </Button>
+
         </Paper>
 
         {/* TABLE */}
+
         <TableContainer component={Paper}>
+
           <Table>
+
             <TableHead sx={{ backgroundColor: "#f8fafc" }}>
               <TableRow>
                 <TableCell><b>Company Name</b></TableCell>
@@ -183,11 +200,17 @@ const Companies = () => {
             </TableHead>
 
             <TableBody>
+
               {filteredCompanies.map((company, index) => (
+
                 <TableRow key={index}>
+
                   <TableCell colSpan={3} sx={{ p: 0 }}>
+
                     <Accordion>
+
                       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+
                         <Box
                           sx={{
                             display: "grid",
@@ -196,8 +219,9 @@ const Companies = () => {
                             alignItems: "center",
                           }}
                         >
-                          {/* COMPANY NAME + AVATAR */}
+
                           <Stack direction="row" spacing={2} alignItems="center">
+
                             <Avatar
                               sx={{
                                 bgcolor: getAvatarColor(company.name),
@@ -208,9 +232,11 @@ const Companies = () => {
                             >
                               {getInitials(company.name)}
                             </Avatar>
+
                             <Typography fontWeight={600}>
                               {company.name}
                             </Typography>
+
                           </Stack>
 
                           <Typography color="text.secondary">
@@ -226,29 +252,42 @@ const Companies = () => {
                             }
                             size="small"
                           />
+
                         </Box>
+
                       </AccordionSummary>
 
                       {/* CUSTOMER TABLE */}
+
                       <AccordionDetails>
+
                         <Table size="small">
+
                           <TableHead>
+
                             <TableRow>
                               <TableCell><b>Customer</b></TableCell>
                               <TableCell><b>No. of Machines</b></TableCell>
                               <TableCell><b>Balance</b></TableCell>
+                              <TableCell><b>Details</b></TableCell>
                             </TableRow>
+
                           </TableHead>
 
                           <TableBody>
+
                             {company.customers.map((cust, idx) => (
+
                               <TableRow key={idx}>
+
                                 <TableCell>
+
                                   <Stack
                                     direction="row"
                                     spacing={2}
                                     alignItems="center"
                                   >
+
                                     <Avatar
                                       sx={{
                                         bgcolor: getAvatarColor(cust.name),
@@ -260,33 +299,143 @@ const Companies = () => {
                                     >
                                       {getInitials(cust.name)}
                                     </Avatar>
+
                                     <Typography>{cust.name}</Typography>
+
                                   </Stack>
+
                                 </TableCell>
 
                                 <TableCell>{cust.machines}</TableCell>
+
                                 <TableCell>{cust.balance}</TableCell>
+
+                                <TableCell>
+
+                                  <Button
+                                    variant="outlined"
+                                    size="small"
+                                    startIcon={<VisibilityIcon />}
+                                    onClick={() => handleViewDetails(cust)}
+                                  >
+                                    View
+                                  </Button>
+
+                                </TableCell>
+
                               </TableRow>
+
                             ))}
+
                           </TableBody>
+
                         </Table>
+
                       </AccordionDetails>
+
                     </Accordion>
+
                   </TableCell>
+
                 </TableRow>
+
               ))}
 
-              {filteredCompanies.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={3} align="center" sx={{ py: 4 }}>
-                    No companies found
-                  </TableCell>
-                </TableRow>
-              )}
             </TableBody>
+
           </Table>
+
         </TableContainer>
+
       </Box>
+
+      {/* DETAILS POPUP */}
+
+    <Dialog
+      open={openDetails}
+      onClose={() => setOpenDetails(false)}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: { borderRadius: 3 }
+      }}
+    >
+
+    {selectedCustomer && (
+
+    <>
+    <DialogTitle sx={{ fontWeight: 700 }}>
+    Customer Details
+    </DialogTitle>
+
+    <DialogContent>
+
+    <Stack spacing={2}>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <HomeIcon color="primary" fontSize="small"/>
+    <Typography><b>Address:</b> {selectedCustomer.address}</Typography>
+    </Stack>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <LocationOnIcon color="primary" fontSize="small"/>
+    <Typography><b>City:</b> {selectedCustomer.city}</Typography>
+    </Stack>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <LocationOnIcon color="primary" fontSize="small"/>
+    <Typography><b>District:</b> {selectedCustomer.district}</Typography>
+    </Stack>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <LocationOnIcon color="primary" fontSize="small"/>
+    <Typography><b>State:</b> {selectedCustomer.state}</Typography>
+    </Stack>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <LocationOnIcon color="primary" fontSize="small"/>
+    <Typography><b>Pin Code:</b> {selectedCustomer.pin}</Typography>
+    </Stack>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <LocationOnIcon color="primary" fontSize="small"/>
+    <Typography><b>Landmark:</b> {selectedCustomer.landmark}</Typography>
+    </Stack>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <PhoneIcon color="primary" fontSize="small"/>
+    <Typography><b>Contact:</b> {selectedCustomer.contact}</Typography>
+    </Stack>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <PhoneIcon color="primary" fontSize="small"/>
+    <Typography><b>Alternate:</b> {selectedCustomer.alternate}</Typography>
+    </Stack>
+
+    <Stack direction="row" spacing={1} alignItems="center">
+    <EmailIcon color="primary" fontSize="small"/>
+    <Typography><b>Email:</b> {selectedCustomer.email}</Typography>
+    </Stack>
+
+    </Stack>
+
+    </DialogContent>
+
+    <DialogActions>
+
+    <Button
+    variant="contained"
+    onClick={() => setOpenDetails(false)}
+    >
+    Close
+    </Button>
+
+    </DialogActions>
+    </>
+    )}
+
+    </Dialog>
+
     </Box>
   );
 };

@@ -3,10 +3,9 @@ import {
   Box,
   Paper,
   Typography,
-  TextField,
   Button,
   Stack,
-  Autocomplete,
+  TextField,
   Table,
   TableHead,
   TableRow,
@@ -24,47 +23,24 @@ import DialogActions from "@mui/material/DialogActions";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-import Sidebar from "../../components/sidebar/Sidebar";
-import { apiRequest } from "../../services/api"; // ✅ NEW
+import Sidebar from "../../components/customerSidebar/CustomerSidebar";
+import { apiRequest } from "../../services/api"; // ✅ IMPORTANT
 
-const deviceList = [
-  "WATER_001",
-  "WATER_003",
-  "WATER_033",
-  "WATER_222",
-  "WATER_777",
-];
+/* Dummy Machine ID */
 
-/* Dummy Transaction Data */
+const MACHINE_ID = "WATER_777";
+
+/* Dummy Transactions */
 
 const transactions = [
-  {
-    id: 1,
-    time: "13-03-2026 03:00:00",
-    machine: "WATER_001",
-    amount: 200,
-    status: "Confirmed",
-  },
-  {
-    id: 2,
-    time: "12-03-2026 08:30:00",
-    machine: "WATER_777",
-    amount: 500,
-    status: "Pending",
-  },
-  {
-    id: 3,
-    time: "11-03-2026 05:10:00",
-    machine: "WATER_003",
-    amount: 300,
-    status: "Failed",
-  },
+  { id: 1, time: "13-03-2026 03:00:00", amount: 200, status: "Confirmed" },
+  { id: 2, time: "12-03-2026 08:30:00", amount: 500, status: "Pending" },
+  { id: 3, time: "11-03-2026 05:10:00", amount: 300, status: "Failed" }
 ];
 
-const Recharge = () => {
+const CustomerRecharge = () => {
 
   const [amount, setAmount] = useState("");
-  const [deviceId, setDeviceId] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [openRecharge, setOpenRecharge] = useState(false);
@@ -87,13 +63,6 @@ const Recharge = () => {
     return <Chip label={status} size="small" />;
   };
 
-  const handleAmountChange = (e) => {
-    const value = e.target.value;
-    if (/^\d*\.?\d*$/.test(value)) {
-      setAmount(value);
-    }
-  };
-
   /* 🔥 UPDATED SUBMIT */
 
   const handleSubmit = async () => {
@@ -105,13 +74,6 @@ const Recharge = () => {
       return;
     }
 
-    if (!deviceId) {
-      setPopupType("error");
-      setPopupMessage("Select Device ID");
-      setOpenPopup(true);
-      return;
-    }
-
     try {
 
       setLoading(true);
@@ -119,14 +81,14 @@ const Recharge = () => {
       const response = await apiRequest("/recharge", {
         method: "POST",
         body: JSON.stringify({
-          device_id: deviceId,
-          amount: Number(amount),
-        }),
+          device_id: MACHINE_ID,
+          amount: Number(amount)
+        })
       });
 
       setLoading(false);
 
-      // ⚠️ agar session expire hua to response null milega
+      // ⚠️ session expire hua → redirect already ho chuka hoga
       if (!response) return;
 
       if (response.ok) {
@@ -134,14 +96,12 @@ const Recharge = () => {
         setPopupType("success");
 
         setPopupMessage(
-          `Successful recharge of ₹${amount} on device ${deviceId} has been completed.`
+          `Successful recharge of ₹${amount} on machine ${MACHINE_ID}.`
         );
 
         setOpenPopup(true);
         setOpenRecharge(false);
-
         setAmount("");
-        setDeviceId("");
 
       } else {
 
@@ -166,9 +126,9 @@ const Recharge = () => {
 
       <Box sx={{ flexGrow: 1, p: 4, backgroundColor: "#f1f5f9" }}>
 
-        {/* HEADER */}
+        {/* Header */}
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
           <Typography variant="h5" fontWeight={700}>
             Recharge Transactions
           </Typography>
@@ -178,16 +138,27 @@ const Recharge = () => {
           </Button>
         </Box>
 
-        {/* TABLE */}
+        {/* Machine ID */}
 
-        <Paper sx={{ p: 3 }}>
+        <Typography sx={{ mb: 3, color: "#475569" }}>
+          Machine ID: <strong>{MACHINE_ID}</strong>
+        </Typography>
+
+        {/* Table */}
+
+        <Paper
+          sx={{
+            p: 3,
+            borderRadius: 2,
+            boxShadow: "0 8px 30px rgba(0,0,0,0.08)"
+          }}
+        >
           <Table>
 
             <TableHead>
               <TableRow>
                 <TableCell sx={{ fontWeight: 700 }}>S NO</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Time</TableCell>
-                <TableCell sx={{ fontWeight: 700 }}>Machine ID</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Recharge Amount</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
               </TableRow>
@@ -198,7 +169,6 @@ const Recharge = () => {
                 <TableRow key={row.id}>
                   <TableCell>{row.id}</TableCell>
                   <TableCell>{row.time}</TableCell>
-                  <TableCell>{row.machine}</TableCell>
                   <TableCell>₹{row.amount}</TableCell>
                   <TableCell>{getStatusChip(row.status)}</TableCell>
                 </TableRow>
@@ -210,33 +180,20 @@ const Recharge = () => {
 
       </Box>
 
-      {/* RECHARGE POPUP */}
+      {/* Recharge Popup */}
 
       <Dialog open={openRecharge} onClose={() => setOpenRecharge(false)} maxWidth="sm" fullWidth>
 
-        <DialogTitle>Recharge Device</DialogTitle>
+        <DialogTitle>Recharge Machine</DialogTitle>
 
         <DialogContent>
           <Stack spacing={3} mt={1}>
-
             <TextField
               label="Recharge Amount (₹)"
               value={amount}
-              onChange={handleAmountChange}
+              onChange={(e) => setAmount(e.target.value)}
               fullWidth
             />
-
-            <Autocomplete
-              freeSolo
-              options={deviceList}
-              value={deviceId}
-              onChange={(e, newValue) => setDeviceId(newValue)}
-              onInputChange={(e, newInput) => setDeviceId(newInput)}
-              renderInput={(params) => (
-                <TextField {...params} label="Device ID" />
-              )}
-            />
-
           </Stack>
         </DialogContent>
 
@@ -249,7 +206,7 @@ const Recharge = () => {
 
       </Dialog>
 
-      {/* RESULT POPUP */}
+      {/* Result Popup */}
 
       <Dialog open={openPopup} onClose={() => setOpenPopup(false)}>
 
@@ -274,7 +231,7 @@ const Recharge = () => {
 
       </Dialog>
 
-      {/* LOADING */}
+      {/* Loading Overlay */}
 
       {loading && (
         <Box
@@ -304,4 +261,4 @@ const Recharge = () => {
   );
 };
 
-export default Recharge;
+export default CustomerRecharge;

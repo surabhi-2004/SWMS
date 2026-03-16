@@ -3,7 +3,6 @@ import { Grid, Typography, Box } from "@mui/material";
 import LoginForm from "../components/auth/LoginForm";
 import bgImage from "../assets/images/water-bg.jpg";
 
-
 const Login = () => {
   return (
     <Box
@@ -13,15 +12,14 @@ const Login = () => {
           rgba(147, 162, 182, 0.55),
           rgba(3, 15, 31, 0.55)
         ), url(${bgImage})`,
-
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",   
+        backgroundRepeat: "no-repeat",
       }}
     >
-
       <Grid container height="100%">
-        {/* Left */}
+        
+        {/* Left Section */}
         <Grid
           item
           xs={12}
@@ -32,7 +30,6 @@ const Login = () => {
             justifyContent: "center",
             px: 8,
           }}
-
         >
           <Typography
             variant="h4"
@@ -47,25 +44,20 @@ const Login = () => {
             Smart Water Monitoring System
           </Typography>
 
-
-
-
           <Typography
             variant="body1"
             className="animate__animated animate__zoomIn animate__delay-1s"
             sx={{
               fontFamily: "Rubik, sans-serif",
-              color: "rgba(255,255,255,0.85)", // soft white
+              color: "rgba(255,255,255,0.85)",
               maxWidth: 420,
             }}
           >
             Monitor water quality, machine health and usage in real time.
           </Typography>
-
-
         </Grid>
 
-        {/* Right */}
+        {/* Right Section */}
         <Grid
           item
           xs={12}
@@ -78,6 +70,7 @@ const Login = () => {
         >
           <LoginForm />
         </Grid>
+
       </Grid>
     </Box>
   );
